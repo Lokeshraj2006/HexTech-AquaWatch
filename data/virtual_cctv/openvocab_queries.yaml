@@ -1,0 +1,51 @@
+# Held-out natural-language queries for the open-vocabulary search (tools/eval_openvocab.py).
+#
+# HOW THESE LABELS WERE MADE (read before quoting any number):
+#   * Written on 2026-10-10 by the AI coding assistant from a frame-by-frame look at the source clip
+#     (one frame per second of cam04 = the full frame), BEFORE any search result was seen, and never changed after.
+#     The team should re-check them by eye; they are not an independent human annotation.
+#   * cameras = every virtual camera whose crop (geometry.json) contains the thing in the time window.
+#   * A hit = a returned camera in `cameras` and a returned time inside [start - tolerance, end + tolerance].
+#   * negatives = things that are NOT in the footage: the right answer is "no confident match".
+#   * 8 positive + 3 negative queries on ONE 23.7 s recording: a small sanity check, not a benchmark.
+tolerance_s: 1.0
+queries:
+  - id: q1_lifeguard_jump
+    text: "a lifeguard jumping into the pool"
+    cameras: [cam01, cam02, cam04]
+    window: [16.0, 18.0]
+  - id: q2_splash
+    text: "a big white splash in the water"
+    cameras: [cam01, cam02, cam03, cam04]
+    window: [17.5, 21.5]
+  - id: q3_life_jacket
+    text: "a child wearing a blue life jacket"
+    cameras: [cam01, cam02, cam04]
+    window: [0.0, 21.5]
+  - id: q4_lifeguard_deck_tube
+    text: "a lifeguard standing on the pool deck holding a rescue tube"
+    cameras: [cam01, cam04]
+    window: [14.5, 16.8]
+  - id: q5_capcut_outro
+    text: "a black screen with the CapCut logo"
+    cameras: [cam01, cam02, cam03, cam04]
+    window: [21.8, 23.7]
+  - id: q6_rescue_swim
+    text: "a lifeguard swimming with a red rescue tube"
+    cameras: [cam01, cam02, cam03, cam04]
+    window: [18.0, 21.5]
+  - id: q7_lifeguard_chair
+    text: "a person sitting on a tall lifeguard chair"
+    cameras: [cam01, cam04]
+    window: [0.0, 14.0]
+  - id: q8_inner_tube
+    text: "a person lying on a blue inflatable ring"
+    cameras: [cam01, cam02, cam03, cam04]
+    window: [0.0, 21.5]
+negatives:
+  - id: n1_car
+    text: "a red car"
+  - id: n2_dog
+    text: "a dog"
+  - id: n3_bicycle
+    text: "a person riding a bicycle"

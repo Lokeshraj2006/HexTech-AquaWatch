@@ -1,0 +1,20 @@
+[
+  {
+    "event_id": 1,
+    "entity_id": 3,
+    "behavior": "aquatic_distress",
+    "time": "00:17",
+    "text": "Attention lifeguard. Swimmer number 3 may be in distress at the Deep End. Risk 97 percent.",
+    "audio": "alerts/alert_e1.wav",
+    "voice": "windows"
+  },
+  {
+    "event_id": 2,
+    "entity_id": 3,
+    "behavior": "submersion",
+    "time": "00:29",
+    "text": "Urgent. Swimmer number 3 may have gone under at the Deep End. Check now.",
+    "audio": "alerts/alert_e2.wav",
+    "voice": "windows"
+  }
+]

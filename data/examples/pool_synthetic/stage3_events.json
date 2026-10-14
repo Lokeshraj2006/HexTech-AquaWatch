@@ -1,0 +1,92 @@
+{
+  "events": [
+    {
+      "person_id": 3,
+      "event": "high_risk_aquatic_distress",
+      "start_time": 17.0,
+      "alert_time": 22.0,
+      "end_time": 29.5,
+      "risk_score": 0.97,
+      "evidence": [
+        "vertical_posture",
+        "low_displacement",
+        "repeated_arm_motion",
+        "unstable_head",
+        "transition_from_swimming"
+      ],
+      "location": "Deep End"
+    },
+    {
+      "person_id": 3,
+      "event": "possible_submersion",
+      "start_time": 29.76,
+      "alert_time": 29.76,
+      "end_time": 29.76,
+      "risk_score": 0.98,
+      "evidence": [
+        "lost_from_view"
+      ],
+      "location": "Deep End"
+    }
+  ],
+  "timeline": {
+    "1": [
+      {
+        "t": 2.0,
+        "state": "NORMAL",
+        "note": "Normal swimming"
+      }
+    ],
+    "2": [],
+    "3": [
+      {
+        "t": 2.0,
+        "state": "NORMAL",
+        "note": "Normal swimming"
+      },
+      {
+        "t": 11.5,
+        "state": "NORMAL",
+        "note": "Movement slowing"
+      },
+      {
+        "t": 12.0,
+        "state": "NORMAL",
+        "note": "Very low displacement"
+      },
+      {
+        "t": 14.5,
+        "state": "WATCH",
+        "note": "Head position unstable"
+      },
+      {
+        "t": 15.5,
+        "state": "WARNING",
+        "note": "Vertical posture"
+      },
+      {
+        "t": 17.5,
+        "state": "WARNING",
+        "note": "Repeated arm movement"
+      },
+      {
+        "t": 22.0,
+        "state": "DISTRESS",
+        "note": "HIGH-RISK AQUATIC DISTRESS"
+      },
+      {
+        "t": 29.76,
+        "state": "SUBMERSION",
+        "note": "Possible submersion (lost from view)"
+      }
+    ],
+    "4": [
+      {
+        "t": 2.0,
+        "state": "NORMAL",
+        "note": "Normal swimming"
+      }
+    ],
+    "5": []
+  }
+}

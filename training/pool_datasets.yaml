@@ -1,0 +1,37 @@
+# Recipe for training/build_dataset.py: which downloaded datasets go into the swimmer detector, and how
+# their labels map to OUR 5 body-state classes. Decided after looking at sample boxes of every class.
+#   swimmer_horizontal | swimmer_vertical | head_only | underwater | out_of_water | drop
+# A source "Drowning" box shows an UPRIGHT body (the decision "distress" is made over time by distress.py).
+# head_only / underwater have no source labels yet: add frames from your own staged clips (docs/POOL.md).
+
+output: datasets/swimmers
+split: [0.8, 0.1, 0.1]        # train / val / test fractions, split BY SOURCE VIDEO (no frame leakage)
+seed: 7
+
+sources:
+  university:
+    path: datasets/raw/university
+    credit: "Swimming and Drowning Detection, by University, Roboflow Universe, CC BY 4.0, https://universe.roboflow.com/university-g3h71/swimming-and-drowning-detection"
+    map:
+      Swimming: swimmer_horizontal
+      Drowning: swimmer_vertical
+      Person out of water: out_of_water
+  # poolsafety: NOT used. Verified a re-upload of "university" (40 of 40 sampled un-augmented frames are
+  # pixel-identical), so it only adds redundant copies. Kept here for reference.
+  poolsafety_disabled:
+    enabled: false
+    path: datasets/raw/poolsafety
+    credit: "drowning detection, by Pool safety, Roboflow Universe, CC BY 4.0, https://universe.roboflow.com/pool-safety/drowning-detection-otnme"
+    map:
+      Swimming: swimmer_horizontal
+      Drowning: swimmer_vertical
+      drowning: swimmer_vertical
+      Person out of water: out_of_water
+      Drowning-headdown: drop      # only 2 boxes, face-down floating
+  treading:
+    path: datasets/raw/treading
+    credit: "drowning (swimming / drowning / treading_water), by children in buggy, Roboflow Universe, CC BY 4.0, https://universe.roboflow.com/children-in-buggy/drowning-i0nae"
+    map:
+      swimming: swimmer_horizontal
+      drowning: swimmer_vertical
+      treading_water: swimmer_vertical   # the look-alike: same body state, stage 3 tells them apart over time

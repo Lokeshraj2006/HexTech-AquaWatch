@@ -1,0 +1,19 @@
+# AquaWatch dependencies. Python 3.11.
+# torch is NOT listed: it comes with ultralytics, and Google Colab already has it.
+# For a local NVIDIA GPU, install the matching CUDA build of torch from https://pytorch.org first, then run
+#   pip install -r requirements.txt
+# streamlit is for the web UI only (streamlit run app.py); run.py does not need it. The UI was tested on 1.65
+# (older versions may lack some of the newer calls it uses, such as st.iframe).
+ultralytics>=8.3.0,<9
+lap>=0.5.12
+opencv-python
+numpy
+pyyaml
+matplotlib
+streamlit>=1.65
+# The three pool detectors are OpenVINO exports (get them with: python aquawatch/get_models.py).
+openvino>=2024.0
+# The chat's question router and picture search (CLIP).
+open-clip-torch>=2.24
+# Optional, only for the chat's 'Check with YOLOE' button: the CLIP package Ultralytics uses (needs git):
+#   pip install git+https://github.com/ultralytics/CLIP.git

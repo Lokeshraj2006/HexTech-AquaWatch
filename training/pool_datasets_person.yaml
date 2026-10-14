@@ -1,0 +1,42 @@
+# Recipe for a SINGLE-CLASS pool person detector (YOLO11s @ 800 px), to replace stock yolo11s in the pool_hd preset.
+#   python training/build_dataset.py --recipe training/pool_datasets_person.yaml
+# Every person-like box of every source becomes class 0 "person" (same id as COCO person, so pool_hd's classes: [0]
+# keeps working). Body state (horizontal / vertical) is NOT learned here: that stays with the 5-class best.pt.
+# Why these sources: they are the pool datasets we could verify (labels looked at, licence CC BY 4.0).
+#   poolsafety stays disabled: it is a re-upload of university (checked on the pixels).
+#   yashwanee (8,925 images) has only 2,385 unique frames; the rest are Roboflow augmented copies (kept in train,
+#   always in the same split as their original). Duplicates across sources are removed on the pixels.
+
+output: datasets/pool_person
+classes: [person]
+split: [0.8, 0.1, 0.1]        # train / val / test, split BY SOURCE VIDEO (neighbouring frames never cross splits)
+seed: 7
+
+sources:
+  university:
+    path: datasets/raw/university
+    credit: "Swimming and Drowning Detection, by University, Roboflow Universe, CC BY 4.0, https://universe.roboflow.com/university-g3h71/swimming-and-drowning-detection"
+    map:
+      Swimming: person
+      Drowning: person
+      Person out of water: person
+  poolsafety_disabled:
+    enabled: false
+    path: datasets/raw/poolsafety
+    credit: "drowning detection, by Pool safety, Roboflow Universe, CC BY 4.0, https://universe.roboflow.com/pool-safety/drowning-detection-otnme"
+    map: {}
+  treading:
+    path: datasets/raw/treading
+    credit: "drowning (swimming / drowning / treading_water), by children in buggy, Roboflow Universe, CC BY 4.0, https://universe.roboflow.com/children-in-buggy/drowning-i0nae"
+    map:
+      swimming: person
+      drowning: person
+      treading_water: person
+  yashwanee:
+    path: datasets/raw/yashwanee
+    credit: "Drowning Detection And Prevention In Swimming Pools, by yashwanee tetar, Roboflow Universe, CC BY 4.0, https://universe.roboflow.com/yashwanee-tetar-jm88u/drowning-detection-and-prevention-in-swimming-pools"
+    map:
+      Drowning: person
+      Out of Water: person
+      Swimming: person
+      person: person

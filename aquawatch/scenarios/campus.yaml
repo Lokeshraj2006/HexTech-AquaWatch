@@ -1,0 +1,17 @@
+# Scenario preset: campus corridor with a restricted zone (the default).
+#
+# A preset is a PARTIAL config. It is deep-merged over config.yaml, so you only write
+# the keys that differ. The campus preset changes nothing: it IS the defaults, and this
+# file only spells out the wording (the `scenario:` block) so the pattern is easy to copy.
+#
+# Use it with:  python run.py --video samples/clip.mp4 --zones zones.json --scenario campus
+#
+# Internal behaviour keys (loitering, zone_intrusion, running, fall, crowding, near_miss)
+# never change. Only the display names and the numbers below them do.
+
+scenario:
+  name: campus
+  title: "Campus corridor (restricted zone)"
+  entity_word: Person        # "Person #3"
+  unit_word: body-heights    # speeds and distances are measured in the person's body-heights
+  behavior_names: {}         # empty = the default names (Loitering, Zone intrusion, Running, ...)

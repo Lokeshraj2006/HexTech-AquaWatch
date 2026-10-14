@@ -1,0 +1,67 @@
+# Streamlit settings for the AquaWatch dashboard (run it with: streamlit run app.py).
+
+[server]
+address = "127.0.0.1"          # privacy: only the computer that runs it can open the page (it shows swimmers' images)
+maxUploadSize = 200            # MB; uploaded videos are saved to samples/uploads/ (largest sample clip is ~41 MB)
+showEmailPrompt = false        # a fresh laptop must not stop at "Email:" in the terminal before the page starts
+enableStaticServing = true     # serves static/ (the dashboard wallpaper) at app/static/
+
+[browser]
+gatherUsageStats = false       # no telemetry: the demo must work offline and look the same everywhere
+
+# "Glass" theme (2026-10-13): see-through frosted gray panels over a plain neutral background, like a Mac app, in a
+# light and a dark version (no colour patches: colour only where it means something). The panels, background
+# and chat bubbles are drawn by ui_theme.py (CSS); these values set everything
+# Streamlit draws itself (inputs, tables, charts, badges). With [theme.light] and [theme.dark] both set, the page
+# follows the computer's own light / dark setting; the switch at the top of the sidebar (or the menu, ⋮ > Settings)
+# changes it. Fonts: the system's own (San Francisco on a Mac, Segoe UI on Windows): nothing is downloaded.
+[theme]
+font = "-apple-system, BlinkMacSystemFont, SF Pro Text, Segoe UI Variable Text, Segoe UI, Helvetica Neue, sans-serif"
+headingFont = "-apple-system, BlinkMacSystemFont, SF Pro Display, Segoe UI Variable Display, Segoe UI, Helvetica Neue, sans-serif"
+baseRadius = "0.5rem"
+buttonRadius = "0.5rem"
+metricValueFontSize = "1.7rem"
+showSidebarBorder = false
+chartCategoricalColors = ["#0a84ff", "#30b0c7", "#ff9f0a", "#bf5af2", "#34c759", "#ff375f", "#5e5ce6", "#64d2ff",
+                          "#a2845e", "#ffd60a"]
+
+[theme.light]
+primaryColor = "#0071e3"       # Analyse button, links, active controls (white text on it is readable: 4.7:1)
+backgroundColor = "#f2f2f4"    # under the glass background of ui_theme.py
+secondaryBackgroundColor = "#e9e9ed"
+textColor = "#1d1d1f"
+borderColor = "#d2d2d7"
+dataframeHeaderBackgroundColor = "#ececf0"
+redColor = "#d92d20"
+orangeColor = "#c2410c"
+greenColor = "#1a7f37"
+blueColor = "#0071e3"
+violetColor = "#7a3fd1"
+grayColor = "#6e6e73"
+
+[theme.light.sidebar]
+backgroundColor = "#ececf0"
+secondaryBackgroundColor = "#ffffff"
+
+[theme.dark]
+primaryColor = "#0a84ff"
+backgroundColor = "#18181a"    # under the glass background of ui_theme.py
+secondaryBackgroundColor = "#2c2c2e"
+textColor = "#f5f5f7"
+borderColor = "#3a3a3c"
+linkColor = "#5eb0ff"
+dataframeHeaderBackgroundColor = "#232325"
+codeBackgroundColor = "#1f1f21"
+redColor = "#ff6b61"
+orangeColor = "#ffa340"
+greenColor = "#4ade80"
+blueColor = "#5eb0ff"
+violetColor = "#c08bff"
+grayColor = "#98989d"
+
+[theme.dark.sidebar]
+backgroundColor = "#1f1f21"
+secondaryBackgroundColor = "#2c2c2e"
+
+[client]
+toolbarMode = "minimal"        # hides the "Deploy" button and developer menu items

@@ -1,0 +1,4 @@
+clip,entity_description,behavior,start_s,end_s
+example_corridor.mp4,man in a red jacket,loitering,12.0,34.0
+example_corridor.mp4,woman with a backpack,running,41.0,48.0
+example_quiet_clip.mp4,no unusual activity,none,,

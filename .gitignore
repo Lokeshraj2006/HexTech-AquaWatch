@@ -1,0 +1,51 @@
+# ---------------------------------------------------------------- environments and caches
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+.claude/
+
+# ---------------------------------------------------------------- generated results (made by run.py / ingest.py)
+outputs/
+eval_report.txt
+eval_report.json
+zone_grid.jpg
+zone_preview.jpg
+config_tuned.yaml
+*.zip
+
+# ---------------------------------------------------------------- models and datasets (large; see README "Models")
+*.pt
+*.onnx
+models/
+weights/
+datasets/
+data/calib/
+data/calib_ov/
+
+# ---------------------------------------------------------------- videos and pictures stay on the computer
+# Real pool footage has no publishing rights (samples/SOURCES.md): never commit it, nor anything cut from it.
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.webm
+samples/uploads/
+samples/originals/
+samples/pexels/
+data/virtual_cctv/videos/
+data/virtual_cctv/coverage.jpg
+data/sites/
+!samples/.gitkeep
+# ...except the small clips this project makes itself (tests and the drawn example)
+!tests/fixtures/*.mp4
+!data/examples/pool_synthetic/*.mp4
+
+# ---------------------------------------------------------------- local material that is not part of the code
+docs/ppt_assets/
+*.pptx
+*.pdf
+
+# ---------------------------------------------------------------- Streamlit secrets (none are used today)
+.streamlit/secrets.toml

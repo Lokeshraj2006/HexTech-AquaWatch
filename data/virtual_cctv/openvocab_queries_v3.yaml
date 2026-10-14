@@ -1,0 +1,38 @@
+# THIRD held-out query set, written on 2026-10-10 BEFORE the YOLO-World / YOLOE grounding and the quantized models
+# were built or run (see PREREGISTRATION_v3.md for the decision rules fixed at the same time).
+# Labels: drafted by the AI coding assistant from full-resolution frames of cam04 (t = 2, 8, 16, 21 s) and one frame per
+# second; never changed after the first run. These are fixed scene objects visible for the whole clip, so their window
+# is the whole video before the CapCut outro. cameras = every crop in geometry.json that contains the object:
+#   red umbrella (x 0-45, y 30-60), blue tents (x 100-250, y 30-50): above every crop except cam04's full frame;
+#   pool ladder (x ~745, y 75-100) and wooden post (x 780-848, y 140-410): inside cam03 (x 368-848, y 0-360) and cam04;
+#   "no diving" sign on the wall (x 65-95, y 278-310): inside cam01 (x 0-480, y 120-480) and cam04.
+# Same hit rule as openvocab_queries.yaml (right camera, time inside the window +- tolerance).
+tolerance_s: 1.0
+queries:
+  - id: s1_red_umbrella
+    text: "a red and white beach umbrella"
+    cameras: [cam04]
+    window: [0.0, 21.5]
+  - id: s2_blue_tents
+    text: "blue canopy tents behind the pool"
+    cameras: [cam04]
+    window: [0.0, 21.5]
+  - id: s3_pool_ladder
+    text: "a metal ladder at the edge of the pool"
+    cameras: [cam03, cam04]
+    window: [0.0, 21.5]
+  - id: s4_wall_sign
+    text: "a white warning sign on the pool wall"
+    cameras: [cam01, cam04]
+    window: [0.0, 21.5]
+  - id: s5_wooden_post
+    text: "a thick wooden post"
+    cameras: [cam03, cam04]
+    window: [0.0, 21.5]
+negatives:
+  - id: t1_cat
+    text: "a cat"
+  - id: t2_bus
+    text: "a bus"
+  - id: t3_skier
+    text: "a person skiing"

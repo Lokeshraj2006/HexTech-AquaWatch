@@ -1,0 +1,38 @@
+# SECOND held-out query set (tools/eval_openvocab.py), written on 2026-10-10 AFTER the first evaluation
+# (openvocab_queries.yaml, method v1) and BEFORE the scoring revision v2 was implemented or run. The v1 results on the
+# first set had been seen, so the first set is no longer a clean test for v2; this set is.
+# Labels: drafted by the AI coding assistant from one frame per second of cam04 (the full frame); never changed after
+# the first v2 run. The team should re-check them by eye. Same hit rule as openvocab_queries.yaml.
+tolerance_s: 1.0
+queries:
+  - id: r1_pink_shirt_wall
+    text: "a person in a pink shirt standing by the pool wall"
+    cameras: [cam01, cam04]
+    window: [0.0, 21.5]
+  - id: r2_red_shorts_lifeguard
+    text: "a lifeguard in red shorts"
+    cameras: [cam01, cam02, cam04]
+    window: [14.5, 18.0]
+  - id: r3_lifeguard_tower_umbrella
+    text: "a lifeguard tower with a red umbrella"
+    cameras: [cam03, cam04]
+    window: [0.0, 21.5]
+  - id: r4_float_rope
+    text: "a rope with white floats across the pool"
+    cameras: [cam01, cam02, cam03, cam04]
+    window: [0.0, 21.5]
+  - id: r5_struggling_child
+    text: "a child struggling in the water"
+    cameras: [cam01, cam02, cam03, cam04]
+    window: [13.5, 21.5]
+  - id: r6_people_along_wall
+    text: "people standing in the water along the pool wall"
+    cameras: [cam01, cam04]
+    window: [0.0, 21.5]
+negatives:
+  - id: m1_horse
+    text: "a horse"
+  - id: m2_laptop
+    text: "a laptop computer"
+  - id: m3_snow
+    text: "snow on the ground"

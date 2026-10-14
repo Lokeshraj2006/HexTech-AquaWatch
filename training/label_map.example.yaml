@@ -1,0 +1,25 @@
+# Source dataset class name  ->  one of OUR classes, or "drop".
+# Our classes: swimmer_horizontal, swimmer_vertical, head_only, underwater, out_of_water
+#
+# IMPORTANT: a source label like "drowning" describes how the body LOOKS in that frame, not a verdict.
+# Map it to the body state you see in most of those boxes (usually swimmer_vertical or head_only),
+# after looking at 30-50 example images. The distress decision is made over time by distress.py.
+# Edit this file to match the class names printed in your dataset's data.yaml.
+
+swimming: swimmer_horizontal
+swimmer: swimmer_horizontal
+swim: swimmer_horizontal
+drowning: swimmer_vertical
+drown: swimmer_vertical
+treading: swimmer_vertical
+vertical: swimmer_vertical
+head: head_only
+head_only: head_only
+underwater: underwater
+diving: underwater
+out of water: out_of_water
+out_of_water: out_of_water
+person: out_of_water        # many pool datasets use "person" for people on the deck: check yours!
+lifeguard: out_of_water
+ball: drop
+float: drop

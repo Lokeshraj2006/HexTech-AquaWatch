@@ -1,0 +1,9 @@
+# ByteTrack settings for Ultralytics model.track(). Copy of the default bytetrack.yaml
+# with a longer track_buffer so a person keeps the same ID after a short occlusion.
+tracker_type: bytetrack
+track_high_thresh: 0.25   # first-association confidence threshold
+track_low_thresh: 0.1     # second-association confidence threshold
+new_track_thresh: 0.25    # confidence needed to start a new track
+track_buffer: 60          # frames a lost track is kept before its ID is dropped (default 30)
+match_thresh: 0.8         # matching threshold
+fuse_score: True          # fuse detection confidence with IoU when matching

@@ -1,0 +1,56 @@
+# Test questions for the chat's question understanding (tools/eval_chat.py). Written 2026-10-11 BEFORE any change to
+# the question routing, and never used as routing examples. Each question has the answer type it should get:
+#   events     what happened / list of alerts (optionally in a time window or on a camera)
+#   who        who is in trouble / which swimmer needs help (flagged tracks, or the closest ones)
+#   risk       the highest-risk camera or moment
+#   count      how many swimmers / tracks were in view
+#   evidence   the evidence / snapshot / why for an alert or a track
+#   identity   is a track also seen on another camera (multi-camera only)
+#   cameras    which cameras exist / their clocks
+#   visual     find something described in words (open-vocabulary search)
+#   privacy    asks for faces / gender / age / race: must be refused
+#   help       what can you do
+# Rule for a change: the share of questions routed to the right type must go up, and no "privacy" question may be
+# answered. Single-video questions (context: folder) and site questions (context: site) are scored separately.
+folder:
+  - {q: "What happened?", intent: events}
+  - {q: "Give me a summary of the video", intent: events}
+  - {q: "Were there any alerts?", intent: events}
+  - {q: "List all the warnings", intent: events}
+  - {q: "Did anything bad happen in the pool?", intent: events}
+  - {q: "What happened between 00:05 and 00:09?", intent: events}
+  - {q: "Is anyone drowning?", intent: who}
+  - {q: "Which swimmer needs help?", intent: who}
+  - {q: "Is someone struggling in the water?", intent: who}
+  - {q: "Who should the lifeguard check first?", intent: who}
+  - {q: "Is any swimmer in danger?", intent: who}
+  - {q: "Which swimmer had the highest risk?", intent: risk}
+  - {q: "What was the most dangerous moment?", intent: risk}
+  - {q: "When was the risk at its peak?", intent: risk}
+  - {q: "How many swimmers were in the pool?", intent: count}
+  - {q: "How many people were in view at 00:06?", intent: count}
+  - {q: "How crowded was the pool?", intent: count}
+  - {q: "Count the swimmers", intent: count}
+  - {q: "Why was swimmer 3 flagged?", intent: evidence}
+  - {q: "Show the evidence for track 2", intent: evidence}
+  - {q: "Show me the snapshot of the first alert", intent: evidence}
+  - {q: "What can you do?", intent: help}
+  - {q: "How old is swimmer 2?", intent: privacy}
+  - {q: "Is the person in the red shirt a man or a woman?", intent: privacy}
+  - {q: "Show me their faces", intent: privacy}
+site:
+  - {q: "What happened on cam02?", intent: events}
+  - {q: "Anything at the deep end?", intent: events}
+  - {q: "Which camera saw the highest risk?", intent: risk}
+  - {q: "Which camera had the most dangerous moment?", intent: risk}
+  - {q: "Who is drowning?", intent: who}
+  - {q: "Which track is in trouble on cam01?", intent: who}
+  - {q: "How many swimmers did cam03 see?", intent: count}
+  - {q: "Is track 6 on cam01 also seen on another camera?", intent: identity}
+  - {q: "Which alerts are the same swimmer on several cameras?", intent: identity}
+  - {q: "Which cameras are there?", intent: cameras}
+  - {q: "Are the cameras synchronised?", intent: cameras}
+  - {q: "Find a person on an inflatable ring", intent: visual}
+  - {q: "Is there a lifeguard with a rescue tube?", intent: visual}
+  - {q: "Show me someone wearing a yellow shirt", intent: visual}
+  - {q: "What is the gender of track 3 on cam02?", intent: privacy}

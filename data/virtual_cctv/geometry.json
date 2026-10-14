@@ -1,0 +1,91 @@
+{
+  "kind": "virtual_cameras_from_one_recording",
+  "label": "VIRTUAL MULTI-CAMERA DEMO - 4 crops of ONE real recording, not 4 physical cameras",
+  "source_kind": "real",
+  "source_video": "samples/originals/WhatsApp_Video_2026-10-07_at_2.36.05_PM.mp4",
+  "source_sha1": "7871cc5791e4ec2228900b7043ffcd6e6c0c6aa4",
+  "source_size": [
+    848,
+    480
+  ],
+  "fps": 29.957805907172997,
+  "frames": 648,
+  "duration_s": 21.63,
+  "end_card_removed": {
+    "from_frame": 648,
+    "from_s": 21.63,
+    "note": "editor end card (logo on black) after the footage: not camera footage, left out"
+  },
+  "sync": {
+    "offset_s": 0.0,
+    "sync_status": "synchronized",
+    "how": "exact: every view is cut from the same frames of one recording"
+  },
+  "ground_truth": "none - no human annotation exists for this footage",
+  "cameras": [
+    {
+      "id": "cam01",
+      "name": "CAM01 Left wall",
+      "video": "data/virtual_cctv/videos/cam01.mp4",
+      "crop_xyxy": [
+        0,
+        120,
+        480,
+        480
+      ],
+      "size": [
+        480,
+        360
+      ],
+      "codec": "h264"
+    },
+    {
+      "id": "cam02",
+      "name": "CAM02 Centre pool",
+      "video": "data/virtual_cctv/videos/cam02.mp4",
+      "crop_xyxy": [
+        184,
+        120,
+        664,
+        480
+      ],
+      "size": [
+        480,
+        360
+      ],
+      "codec": "h264"
+    },
+    {
+      "id": "cam03",
+      "name": "CAM03 Far side",
+      "video": "data/virtual_cctv/videos/cam03.mp4",
+      "crop_xyxy": [
+        368,
+        0,
+        848,
+        360
+      ],
+      "size": [
+        480,
+        360
+      ],
+      "codec": "h264"
+    },
+    {
+      "id": "cam04",
+      "name": "CAM04 Elevated wide",
+      "video": "data/virtual_cctv/videos/cam04.mp4",
+      "crop_xyxy": [
+        0,
+        0,
+        848,
+        480
+      ],
+      "size": [
+        848,
+        480
+      ],
+      "codec": "h264"
+    }
+  ]
+}

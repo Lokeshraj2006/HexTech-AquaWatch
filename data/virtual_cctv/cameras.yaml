@@ -1,0 +1,37 @@
+# VIRTUAL MULTI-CAMERA DEMO: 4 crops of ONE real pool CCTV recording (tools/make_virtual_cameras.py).
+# NOT 4 physical cameras. Exact crop geometry: geometry.json. No human-annotated ground truth.
+# All views share the source clock, so they are synchronized exactly (offset 0).
+site: "AquaWatch virtual multi-camera demo (one real recording)"
+cameras:
+  - id: cam01
+    name: "CAM01 Left wall"
+    video: data/virtual_cctv/videos/cam01.mp4
+    zones: data/virtual_cctv/zones/cam01_zones.json   # pool-edge bands (2026-10-11)
+    start_time: "2026-10-09 15:00:00"
+    preset: pool_hd
+    offset_s: 0.0
+    sync_status: synchronized
+  - id: cam02
+    name: "CAM02 Centre pool"
+    video: data/virtual_cctv/videos/cam02.mp4
+    zones: data/virtual_cctv/zones/cam02_zones.json   # pool-edge bands (2026-10-11)
+    start_time: "2026-10-09 15:00:00"
+    preset: pool_hd
+    offset_s: 0.0
+    sync_status: synchronized
+  - id: cam03
+    name: "CAM03 Far side"
+    video: data/virtual_cctv/videos/cam03.mp4
+    zones: data/virtual_cctv/zones/cam03_zones.json   # pool-edge bands (2026-10-11)
+    start_time: "2026-10-09 15:00:00"
+    preset: pool_hd
+    offset_s: 0.0
+    sync_status: synchronized
+  - id: cam04
+    name: "CAM04 Elevated wide"
+    video: data/virtual_cctv/videos/cam04.mp4
+    zones: data/virtual_cctv/zones/cam04_zones.json   # pool-edge bands (2026-10-11)
+    start_time: "2026-10-09 15:00:00"
+    preset: pool_hd
+    offset_s: 0.0
+    sync_status: synchronized

@@ -1,0 +1,59 @@
+# Scenario preset: AQUATIC DISTRESS with the TRAINED swimmer body-state detector (training/).
+#
+# The same pipeline and rules as scenarios/pool.yaml, but stage 1 uses our fine-tuned YOLO11n
+# (training/train_swimmer.py) instead of the stock COCO person detector. The detector outputs a body
+# state per swimmer (horizontal / vertical / head only / underwater / out of water); stage 2 uses it as
+# the posture source before the torso angle and the box shape. See docs/POOL.md and training/README.md.
+#
+# Use it for REAL pool footage. Keep `pool` for the synthetic story (tests/synthetic_pool.py): its cached
+# detections were made for the stock detector, so --reuse would refuse them under this preset.
+#
+#   python run.py --video pool.mp4 --zones pool_zones.json --scenario pool_trained --announce
+#
+# Needs training/runs/swimmer/weights/best.pt (from Colab, section 15 of training/colab_run.ipynb).
+
+scenario:
+  name: pool_trained
+  title: "Aquatic distress (swimming pool, trained swimmer model)"
+  entity_word: Swimmer
+  unit_word: body-heights
+  behavior_names:
+    aquatic_warning: "Swimmer may need help"
+    aquatic_distress: "High-risk aquatic distress"
+    submersion: "Possible submersion"
+
+model:
+  # the same best.pt exported to OpenVINO FP32 (quantize.py): identical boxes (F1 1.000 on 100 frames), 1.48x faster on
+  # this CPU (109 vs 161 ms per frame). INT8 was rejected (F1 0.93 < 0.98). Original: training/runs/swimmer/weights/best.pt
+  weights: models/quant/best_openvino_fp32/best_openvino_model
+  classes: [0, 1, 2, 3, 4]     # all classes of the swimmer model (see pool.state_classes)
+
+video:
+  frame_stride: 2
+
+pool:
+  enabled: true
+  state_classes: {0: swimmer_horizontal, 1: swimmer_vertical, 2: head_only, 3: underwater, 4: out_of_water}
+
+behaviors:                     # land rules make no sense in water: off
+  loitering: {enabled: false}
+  zone_intrusion: {enabled: false}
+  running: {enabled: false}
+  fall: {enabled: false}
+  crowding: {enabled: false}
+  near_miss: {enabled: false}
+  approaching: {enabled: false}
+  baseline: {enabled: false}
+  aquatic_warning: {enabled: true}     # early warning: "please check swimmer N, they may need help"
+  aquatic_distress: {enabled: true}
+  submersion: {enabled: true}
+
+stitch:
+  enabled: true                # one swimmer = one ID, even after going under or a camera swing (stitch.py)
+
+chains:
+  enabled: true                # distress -> submersion is linked into one incident
+  max_gap_s: 30.0
+
+announce:
+  min_risk: 0.7

@@ -1,0 +1,10 @@
+# ByteTrack for the HD pool preset (tuned on crowded pool footage): only confident boxes start or continue a
+# track (fewer junk IDs in crowded wave pools), and a lost track is kept longer (90 frames) so a swimmer who
+# dips under keeps the same ID.
+tracker_type: bytetrack
+track_high_thresh: 0.40   # first-association confidence threshold
+track_low_thresh: 0.20    # second-association confidence threshold
+new_track_thresh: 0.40    # confidence needed to start a new track
+track_buffer: 90          # frames a lost track is kept before its ID is dropped
+match_thresh: 0.8         # matching threshold
+fuse_score: True          # fuse detection confidence with IoU when matching
