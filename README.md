@@ -41,7 +41,7 @@ analysis (no AI guessing), and a design that fits cheap hardware a real pool alr
 ## 3. System overview
 
 ```mermaid
-flowchart LR
+flowchart TD
     V["Pool video"] --> S1["Stage 1<br/>Detect + track<br/>YOLO11 + ByteTrack"]
     S1 --> S2["Stage 2<br/>Behaviour signals<br/>every 0.5 s"]
     S2 --> S3["Stage 3<br/>Risk score +<br/>state machine"]
@@ -126,7 +126,7 @@ Each sample gets a **risk score** = the sum of the warning signs present (max 1.
 A **state machine** per swimmer turns the risk curve into states:
 
 ```mermaid
-flowchart LR
+flowchart TD
     N["NORMAL"] -->|"risk ≥ 0.3"| W["WATCH"]
     W -->|"risk ≥ 0.55"| WA["WARNING"]
     WA -->|"risk ≥ 0.7 held 5 s"| D["DISTRESS"]
