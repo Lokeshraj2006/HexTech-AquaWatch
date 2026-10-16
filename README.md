@@ -79,7 +79,7 @@ flowchart LR
 | FR-8 | Handle several cameras | Camera registry, one site timeline, same swimmer linked across cameras |
 | FR-9 | Answer questions | Plain-English chat; every answer cites camera, time and evidence |
 | FR-10 | Learn place names | Asks once which camera "the deep end" is, then remembers it |
-| FR-11 | Find described things | "Is there a child in a blue life jacket?" via CLIP search and a YOLOE check |
+| FR-11 | Find described things (open vocabulary) | "Is there a child in a blue life jacket?" via CLIP search, checked by the YOLOE or YOLO-World detector (section 6.3) |
 | FR-12 | Check the camera feed | Flags a video that ends early, freezes, has gaps or is too dark |
 | FR-13 | Protect privacy | Runs locally; faces, gender, age never searched; optional face blur |
 
@@ -151,9 +151,11 @@ an evidence snapshot, a risk chart, and a **spoken message** ("Lifeguard, please
 |---|---|
 | ![Alert card](images/alert.jpg) | ![Distress score and evidence](images/distress.jpg) |
 
-## 6. Multi-camera site and chat
+## 6. Multi-camera site, chat and open-vocabulary search
 
-**Multi-camera site.** A camera registry lists each camera's name, video, start time and zones. AquaWatch runs the
+### 6.1 Multi-camera site
+
+A camera registry lists each camera's name, video, start time and zones. AquaWatch runs the
 pipeline on every camera and writes all events into one SQLite index with video time and clock time. The site page
 shows every camera, the swimmers in view, a risk timeline per camera and all events in one table. The same swimmer is
 linked across overlapping cameras from known camera geometry; colour-based look-alike matches are only offered as
@@ -163,18 +165,60 @@ linked across overlapping cameras from known camera geometry; colour-based look-
 
 ![Events from all cameras](images/multi_camera_events.jpg)
 
-**Chat ("Ask AquaWatch").** A drawer on every page:
+### 6.2 Chat ("Ask AquaWatch")
+
+A drawer on every page:
 
 - **Grounded answers:** what happened, who may be in trouble, the highest risk, who was in view at a time, the
   evidence for an alert. Answers are built only from the analysis files, never invented, and cite camera, time,
   track and a clip.
 - **Question routing:** a CLIP text encoder matches the question to the right kind of answer (no chatbot model).
 - **Clarify once:** an unknown place ("the deep end") is asked about once, saved, and remembered after a restart.
-- **Description search:** CLIP ranks video frames for a description; "Check with YOLOE" can confirm with a box or
+- **Description search:** open-vocabulary search (section 6.3); "Check with YOLOE" can confirm with a box or
   say "no confident match".
 - **Privacy:** questions about faces, race, skin colour, gender or age are always refused.
 
 <img src="images/chat.jpg" alt="Chat answer with a clip" width="520">
+
+### 6.3 Open-vocabulary search (CLIP, YOLOE, YOLO-World)
+
+A normal detector only knows its fixed classes (here: a person or a swimmer posture). **Open vocabulary** means you
+can search for anything you can describe in words, even things no model was trained on: "a child in a blue life
+jacket", "a lifeguard jumping into the pool", "a swimmer holding a float".
+
+```mermaid
+flowchart TD
+    Q["Question in words<br/>'a child in a blue life jacket'"] --> T["CLIP text encoder"]
+    F["Frames of every camera"] --> I["CLIP image encoder"]
+    I --> X[("Frame index<br/>INT8 embeddings")]
+    T --> M["Match by similarity"]
+    X --> M
+    M --> R["Top matching moments<br/>camera, time, picture"]
+    R --> C{"Check with<br/>YOLOE / YOLO-World?"}
+    C -->|"yes"| D["Open-vocabulary detector<br/>draws a box or says<br/>'no confident match'"]
+```
+
+| Method | What it does | Strength | Weakness |
+|---|---|---|---|
+| **CLIP frame ranking** (OpenAI CLIP ViT-B/32) | turns every frame and the question into vectors and ranks frames by similarity | fast (~0.2 s per question), finds the right moment most often | cannot say "not there": it always returns its best guess |
+| **YOLOE** (open-vocabulary detector) | takes CLIP's top frames and looks for the described object, drawing a box | can say "not there", shows exactly where | slower (~9 s per question), misses small, far-away objects |
+| **YOLO-World** (open-vocabulary detector) | same idea as YOLOE, a different model | can say "not there" | found fewer right moments than YOLOE |
+
+Measured on 19 "is it there?" questions and 9 "not there" questions (one test clip, a sanity check rather than a
+benchmark), with the rules fixed before measuring:
+
+| Method | Right moment first | In the top 5 | "Not there" rejected | Time per question |
+|---|---|---|---|---|
+| **CLIP frame ranking (used by the chat)** | **12/19** | **18/19** | 0/9 | ~0.21 s |
+| YOLOE (retrieve, then detect) | 6/19 | 9/19 | **9/9** | ~9.3 s |
+| YOLO-World (retrieve, then detect) | 3/19 | 5/19 | **9/9** | ~8.7 s |
+
+- So the chat uses **CLIP ranking** by default, and **"Check with YOLOE"** is a button for a second opinion that can
+  confirm with a box or reject. YOLOE beat YOLO-World, so YOLOE is the one offered.
+- Both detectors run as **OpenVINO FP32** exports (1.4× faster, identical results; section 8). OpenAI CLIP was chosen
+  partly because YOLO-World needs the same CLIP model, so one model file serves both.
+- The frame index stores **INT8 embeddings** (588 KB for the demo site) with the same accuracy as FP16.
+- Searching by face, race, skin colour, gender or age is always refused.
 
 ## 7. Non-functional requirements
 
@@ -239,7 +283,7 @@ model with **F1 ≥ 0.98** on 100 frames.
 | Real labelled recordings | **2 of 6** people in trouble caught, **13 false alerts** |
 | Our swimmer model (held-out test split) | mAP50 0.374, precision 0.424, recall 0.308 |
 | Chat routing | 22/25 single-video and 15/15 site questions right, 0 privacy leaks, median 224 ms |
-| Description search | CLIP: right moment first in 12/19, in the top 5 in 18/19; YOLOE rejected 9/9 "not there" questions |
+| Open-vocabulary search | CLIP: right moment first in 12/19, in the top 5 in 18/19; YOLOE and YOLO-World rejected 9/9 "not there" questions |
 
 **Known limits:** the detector can lose a person who is low in the water; one independent test clip is still missed;
 the warning can come several seconds after the person goes under; only recorded video for now; the multi-camera demo
