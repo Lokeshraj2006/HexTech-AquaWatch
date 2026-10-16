@@ -295,8 +295,9 @@ images/         README pictures
 ## 13. Team and licence
 
 Built by [@Lokeshraj2006](https://github.com/Lokeshraj2006),
-[@aathishreesenthilkumar](https://github.com/aathishreesenthilkumar) and
-[@Meenakshi-Urk24cs1254](https://github.com/Meenakshi-Urk24cs1254).
+[@aathishreesenthilkumar](https://github.com/aathishreesenthilkumar),
+[@Meenakshi-Urk24cs1254](https://github.com/Meenakshi-Urk24cs1254) and
+[@NateshNaren](https://github.com/NateshNaren).
 
 - Licence: **AGPL-3.0** ([LICENSE](LICENSE)), because AquaWatch is built on Ultralytics YOLO (AGPL-3.0).
 - Packages, models and dataset credits: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
